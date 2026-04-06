@@ -13,8 +13,7 @@
     "next": "16.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "next-sanity": "11.0.0",
-    "sanity": "4.13.0"
+    "@notionhq/client": "2.3.0"
   },
   "devDependencies": {
     "typescript": "5.9.3",

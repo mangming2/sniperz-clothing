@@ -1,22 +1,33 @@
 import { homepageDummyData, HomepageData } from './homepage-dummy';
-import { sanityClient } from '../sanity/client';
-import { sanityEnabled } from '../sanity/env';
-import { homepageQuery } from '../sanity/queries';
+import { notionConfig, notionEnabled } from '../notion/env';
+import {
+  getBrandFromNotion,
+  getCampaignsFromNotion,
+  getCollectionsFromNotion
+} from '../notion/client';
 
 export async function getHomepageData(): Promise<HomepageData> {
-  if (!sanityEnabled) {
+  if (!notionEnabled) {
     return homepageDummyData;
   }
 
-  const sanityData = await sanityClient.fetch<HomepageData | null>(homepageQuery);
+  try {
+    const [brand, collections, campaigns] = await Promise.all([
+      getBrandFromNotion(notionConfig.brandDatabaseId),
+      getCollectionsFromNotion(notionConfig.collectionDatabaseId),
+      getCampaignsFromNotion(notionConfig.campaignDatabaseId)
+    ]);
 
-  if (!sanityData?.brand) {
+    if (!brand?.name) {
+      return homepageDummyData;
+    }
+
+    return {
+      brand,
+      collections: collections.length > 0 ? collections : homepageDummyData.collections,
+      campaigns: campaigns.length > 0 ? campaigns : homepageDummyData.campaigns
+    };
+  } catch {
     return homepageDummyData;
   }
-
-  return {
-    brand: sanityData.brand,
-    collections: sanityData.collections ?? homepageDummyData.collections,
-    campaigns: sanityData.campaigns ?? homepageDummyData.campaigns
-  };
 }
