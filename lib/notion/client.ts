@@ -94,3 +94,45 @@ export async function getCampaignsFromNotion(databaseId: string): Promise<Campai
     }))
     .filter((campaign) => Boolean(campaign.title && campaign.slug));
 }
+
+export async function getCollectionBySlug(slug: string): Promise<Collection | null> {
+  const response = await notion.databases.query({
+    database_id: notionConfig.collectionDatabaseId,
+    filter: {
+      property: 'slug',
+      rich_text: { equals: slug }
+    },
+    page_size: 1
+  });
+
+  const page = response.results.find((entry) => isFullPageOrDatabase(entry) && isFullPage(entry));
+  if (!page || !isFullPage(page)) return null;
+
+  return {
+    title: getTitle(page, 'title'),
+    slug: getSlug(page, 'slug'),
+    season: getRichText(page, 'season'),
+    summary: getRichText(page, 'summary')
+  };
+}
+
+export async function getCampaignBySlug(slug: string): Promise<Campaign | null> {
+  const response = await notion.databases.query({
+    database_id: notionConfig.campaignDatabaseId,
+    filter: {
+      property: 'slug',
+      rich_text: { equals: slug }
+    },
+    page_size: 1
+  });
+
+  const page = response.results.find((entry) => isFullPageOrDatabase(entry) && isFullPage(entry));
+  if (!page || !isFullPage(page)) return null;
+
+  return {
+    title: getTitle(page, 'title'),
+    slug: getSlug(page, 'slug'),
+    year: getRichText(page, 'year'),
+    concept: getRichText(page, 'concept')
+  };
+}
