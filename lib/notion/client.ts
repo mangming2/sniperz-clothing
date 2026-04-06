@@ -98,6 +98,7 @@ export async function getCampaignsFromNotion(databaseId: string): Promise<Campai
 export async function getCollectionBySlug(slug: string): Promise<Collection | null> {
   const response = await notion.databases.query({
     database_id: notionConfig.collectionDatabaseId,
+    // Note: 'slug' must be a rich_text property in Notion (not a formula) for this filter to work.
     filter: {
       property: 'slug',
       rich_text: { equals: slug }
@@ -119,6 +120,7 @@ export async function getCollectionBySlug(slug: string): Promise<Collection | nu
 export async function getCampaignBySlug(slug: string): Promise<Campaign | null> {
   const response = await notion.databases.query({
     database_id: notionConfig.campaignDatabaseId,
+    // Note: 'slug' must be a rich_text property in Notion (not a formula) for this filter to work.
     filter: {
       property: 'slug',
       rich_text: { equals: slug }
