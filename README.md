@@ -5,8 +5,8 @@
 ## 시작하기
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 기본 동작은 로컬 더미데이터를 사용합니다.
