@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import FadeIn from './components/FadeIn';
-import { getHomepageData } from '@/lib/data/get-homepage-data';
+import Link from "next/link";
+import FadeIn from "./components/FadeIn";
+import { getHomepageData } from "@/lib/data/get-homepage-data";
 
 export const revalidate = 60;
 
@@ -26,8 +26,11 @@ export default async function HomePage() {
         </FadeIn>
         <div className="masonry-grid">
           {data.collections.map((collection, i) => (
-            <FadeIn key={collection.slug} delay={i * 100}>
-              <Link href={`/collections/${collection.slug}`} className="masonry-card">
+            <FadeIn key={`${collection.slug}-${i}`} delay={i * 100}>
+              <Link
+                href={`/collections/${collection.slug}`}
+                className="masonry-card"
+              >
                 <img
                   src={`https://picsum.photos/seed/col-${collection.slug}/400/600`}
                   alt={collection.title}
@@ -52,8 +55,11 @@ export default async function HomePage() {
         </FadeIn>
         <div className="masonry-grid">
           {data.campaigns.map((campaign, i) => (
-            <FadeIn key={campaign.slug} delay={i * 100}>
-              <Link href={`/campaigns/${campaign.slug}`} className="masonry-card">
+            <FadeIn key={`${campaign.slug}-${i}`} delay={i * 100}>
+              <Link
+                href={`/campaigns/${campaign.slug}`}
+                className="masonry-card"
+              >
                 <img
                   src={`https://picsum.photos/seed/cam-${campaign.slug}/400/600`}
                   alt={campaign.title}
