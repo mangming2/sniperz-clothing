@@ -111,7 +111,7 @@ export async function getCollectionBySlug(slug: string): Promise<Collection | nu
 
   return {
     title: getTitle(page, 'title'),
-    slug: getSlug(page, 'slug'),
+    slug,
     season: getRichText(page, 'season'),
     summary: getRichText(page, 'summary')
   };
@@ -133,7 +133,7 @@ export async function getCampaignBySlug(slug: string): Promise<Campaign | null> 
 
   return {
     title: getTitle(page, 'title'),
-    slug: getSlug(page, 'slug'),
+    slug,
     year: getRichText(page, 'year'),
     concept: getRichText(page, 'concept')
   };
