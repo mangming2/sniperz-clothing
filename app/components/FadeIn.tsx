@@ -14,13 +14,12 @@ export default function FadeIn({ children, delay = 0, className = '' }: FadeInPr
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            el.classList.add('visible');
-          }, delay);
+          timeoutId = setTimeout(() => el.classList.add('visible'), delay);
           observer.disconnect();
         }
       },
@@ -28,11 +27,14 @@ export default function FadeIn({ children, delay = 0, className = '' }: FadeInPr
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      clearTimeout(timeoutId);
+    };
   }, [delay]);
 
   return (
-    <div ref={ref} className={`fade-in-target ${className}`}>
+    <div ref={ref} className={['fade-in-target', className].filter(Boolean).join(' ')}>
       {children}
     </div>
   );
