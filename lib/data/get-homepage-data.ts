@@ -2,7 +2,7 @@ import { homepageDummyData, HomepageData } from './homepage-dummy';
 import { notionConfig, notionEnabled } from '../notion/env';
 import {
   getBrandFromNotion,
-  getCampaignsFromNotion,
+  getEventsFromNotion,
   getCollectionsFromNotion
 } from '../notion/client';
 
@@ -12,10 +12,10 @@ export async function getHomepageData(): Promise<HomepageData> {
   }
 
   try {
-    const [brand, collections, campaigns] = await Promise.all([
+    const [brand, collections, events] = await Promise.all([
       getBrandFromNotion(notionConfig.brandDatabaseId),
       getCollectionsFromNotion(notionConfig.collectionDatabaseId),
-      getCampaignsFromNotion(notionConfig.campaignDatabaseId)
+      getEventsFromNotion(notionConfig.eventDatabaseId)
     ]);
 
     if (!brand?.name) {
@@ -25,7 +25,7 @@ export async function getHomepageData(): Promise<HomepageData> {
     return {
       brand,
       collections: collections.length > 0 ? collections : homepageDummyData.collections,
-      campaigns: campaigns.length > 0 ? campaigns : homepageDummyData.campaigns
+      events: events.length > 0 ? events : homepageDummyData.events
     };
   } catch {
     return homepageDummyData;

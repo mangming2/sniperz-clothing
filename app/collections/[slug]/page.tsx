@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import { notionEnabled } from '@/lib/notion/env';
 import { getCollectionBySlug } from '@/lib/notion/client';
-import { homepageDummyData } from '@/lib/data/homepage-dummy';
+import {
+  formatEuroPrice,
+  getCollectionSoldOut,
+  homepageDummyData
+} from '@/lib/data/homepage-dummy';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 60;
@@ -37,22 +41,43 @@ export default async function CollectionDetailPage({
         <p className="detail-season">{collection.season}</p>
         <h1 className="detail-title">{collection.title}</h1>
         <p className="detail-description">{collection.summary}</p>
+        <div className="detail-meta-row">
+          <span className={`detail-status-tag ${getCollectionSoldOut(collection.inventory) ? 'sold-out' : 'in-stock'}`}>
+            {getCollectionSoldOut(collection.inventory) ? 'Sold Out' : 'Available'}
+          </span>
+          <span className="detail-price">{formatEuroPrice(collection.priceEur)}</span>
+          <span className="detail-stock-total">
+            Total Stock {collection.inventory.reduce((sum, item) => sum + item.stock, 0)}
+          </span>
+        </div>
 
-        <img
-          className="detail-main-image"
-          src={`https://picsum.photos/seed/col-${slug}-main/800/600`}
-          alt={collection.title}
-        />
-
-        <div className="detail-gallery">
-          {[1, 2, 3].map((n) => (
+        <div className="detail-visual-grid">
+          {collection.images.map((image, index) => (
             <img
-              key={n}
-              src={`https://picsum.photos/seed/col-${slug}-g${n}/300/300`}
-              alt={`${collection.title} ${n}`}
+              key={image}
+              className={index === 0 ? 'detail-main-image' : 'detail-gallery-image'}
+              src={image}
+              alt={`${collection.title} view ${index + 1}`}
             />
           ))}
         </div>
+
+        <section className="inventory-panel">
+          <div className="inventory-panel-header">
+            <h2>Size Inventory</h2>
+            <p>상세 페이지에서 사이즈별 재고를 바로 확인할 수 있게 구성했습니다.</p>
+          </div>
+          <div className="inventory-grid">
+            {collection.inventory.map((item) => (
+              <div key={item.size} className={`inventory-card ${item.stock === 0 ? 'empty' : ''}`}>
+                <span className="inventory-size">{item.size}</span>
+                <strong className="inventory-stock">
+                  {item.stock === 0 ? 'Sold Out' : `${item.stock} left`}
+                </strong>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </main>
   );

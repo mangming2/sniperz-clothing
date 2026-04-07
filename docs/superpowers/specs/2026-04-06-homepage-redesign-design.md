@@ -22,7 +22,7 @@
 
 #### 상단 고정 내비게이션
 - 좌: `SNIPERZ` 로고 (홈 링크)
-- 우: `Collections` / `Campaigns` 링크
+- 우: `Collections` / `Events` 링크
 - 배경: `rgba(10,10,10,0.85)` + backdrop-blur
 - 스크롤해도 항상 상단에 고정 (`position: fixed`)
 
@@ -40,13 +40,13 @@
 - 카드 클릭 시 `/collections/[slug]`로 이동
 - 카드들 순차 등장 (stagger: 각 카드 100ms 딜레이)
 
-#### Campaigns 섹션
+#### Events 섹션
 - Collections와 동일한 마소너리 그리드
-- 카드 클릭 시 `/campaigns/[slug]`로 이동
+- 카드 클릭 시 `/events/[slug]`로 이동
 
 ---
 
-### 2. 목록 페이지 (`/collections`, `/campaigns`)
+### 2. 목록 페이지 (`/collections`, `/events`)
 
 - 내비게이션 동일
 - 페이지 타이틀 + 전체 목록을 마소너리 그리드로 표시
@@ -54,11 +54,11 @@
 
 ---
 
-### 3. 상세 페이지 (`/collections/[slug]`, `/campaigns/[slug]`)
+### 3. 상세 페이지 (`/collections/[slug]`, `/events/[slug]`)
 
 위에서 아래로 순서:
 
-1. **← 뒤로가기** 링크 (`/collections` 또는 `/campaigns`)
+1. **← 뒤로가기** 링크 (`/collections` 또는 `/events`)
 2. **시즌/연도 라벨** (소문자, letter-spacing)
 3. **대형 제목** (serif, 굵게)
 4. **설명 텍스트** (summary 또는 concept)
@@ -89,10 +89,10 @@ app/
     page.tsx           — 컬렉션 목록
     [slug]/
       page.tsx         — 컬렉션 상세
-  campaigns/
-    page.tsx           — 캠페인 목록
+  events/
+    page.tsx           — 이벤트 목록
     [slug]/
-      page.tsx         — 캠페인 상세
+      page.tsx         — 이벤트 상세
   globals.css          — 공통 스타일 + 애니메이션 클래스
 
 lib/
@@ -106,10 +106,10 @@ lib/
 
 ## Notion 데이터 연동
 
-- 홈/목록: 기존 `getCollectionsFromNotion`, `getCampaignsFromNotion` 사용
+- 홈/목록: 기존 `getCollectionsFromNotion`, `getEventsFromNotion` 사용
 - 상세: slug로 단일 항목 조회하는 함수 추가 필요
   - `getCollectionBySlug(slug)` — databases.query + filter by slug property
-  - `getCampaignBySlug(slug)` — 동일 패턴
+  - `getEventBySlug(slug)` — 동일 패턴
 
 ---
 

@@ -10,7 +10,13 @@ body {
   margin: 0;
   background: #0a0a0a;
   color: #f8f8f8;
-  font-family: Inter, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
 .page {
@@ -40,6 +46,7 @@ h1 {
   max-width: 720px;
   line-height: 1.65;
   color: #d8d8d8;
+  white-space: pre-line;
 }
 
 .section {
@@ -163,6 +170,38 @@ h1 {
   background: #1a1a1a;
 }
 
+.collection-status-tag,
+.detail-status-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.collection-status-tag.sold-out,
+.detail-status-tag.sold-out {
+  background: rgba(130, 23, 23, 0.7);
+  color: #ffe1e1;
+  border: 1px solid rgba(255, 177, 177, 0.24);
+}
+
+.collection-status-tag.in-stock,
+.detail-status-tag.in-stock {
+  background: rgba(13, 62, 43, 0.72);
+  color: #d9ffe9;
+  border: 1px solid rgba(171, 255, 208, 0.22);
+}
+
 .masonry-grid > *:nth-child(even) {
   margin-top: 24px;
 }
@@ -173,7 +212,9 @@ h1 {
   object-fit: cover;
   display: block;
   opacity: 0.8;
-  transition: opacity 0.3s, transform 0.4s;
+  transition:
+    opacity 0.3s,
+    transform 0.4s;
 }
 
 .masonry-card:hover img {
@@ -270,7 +311,7 @@ h1 {
   font-weight: 800;
   line-height: 1.1;
   margin: 0 0 20px;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .detail-description {
@@ -280,39 +321,134 @@ h1 {
   margin: 0 0 40px;
 }
 
+.detail-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.detail-meta-row .detail-status-tag {
+  position: static;
+}
+
+.detail-stock-total {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #919191;
+}
+
+.detail-price {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f2f2f2;
+}
+
+.detail-visual-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
 .detail-main-image {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
-  margin-bottom: 8px;
 }
 
-.detail-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-top: 2px;
-}
-
-.detail-gallery img {
+.detail-gallery-image {
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
-  opacity: 0.85;
-  transition: opacity 0.2s;
+  opacity: 0.9;
 }
 
-.detail-gallery img:hover {
-  opacity: 1;
+.inventory-panel {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inventory-panel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.inventory-panel-header h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.inventory-panel-header p {
+  margin: 0;
+  color: #9d9d9d;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.inventory-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.inventory-card.empty {
+  opacity: 0.6;
+}
+
+.inventory-size {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8b8b8b;
+}
+
+.inventory-stock {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f5f5f5;
+}
+
+@media (min-width: 768px) {
+  .detail-visual-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detail-main-image {
+    grid-column: span 2;
+  }
+
+  .inventory-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 /* Fade-in animation */
 .fade-in-target {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .fade-in-target.visible {

@@ -13,7 +13,7 @@ pnpm dev
 
 ## Notion API 연결
 
-1. Notion에서 `brand`, `collection`, `campaign` 데이터베이스 3개를 만듭니다.
+1. Notion에서 `brand`, `collection`, `event` 데이터베이스 3개를 만듭니다.
 2. 각 데이터베이스를 생성한 뒤 **Integrations**에서 생성한 API integration을 연결(Share)합니다.
 3. `.env.local` 파일에 아래 값을 입력합니다.
 
@@ -21,9 +21,10 @@ pnpm dev
 NOTION_TOKEN=secret_xxx
 NOTION_BRAND_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 NOTION_COLLECTION_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-NOTION_CAMPAIGN_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NOTION_EVENT_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+`NOTION_CAMPAIGN_DATABASE_ID`도 하위 호환으로 계속 읽습니다.
 환경변수가 없거나 Notion 응답이 실패하면 자동으로 더미데이터 fallback을 사용합니다.
 
 ## Notion 데이터베이스 권장 속성
@@ -39,7 +40,7 @@ NOTION_CAMPAIGN_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 - `season` (Text)
 - `summary` (Text)
 
-### 3) campaign DB
+### 3) event DB
 - `title` (Title)
 - `slug` (Text 또는 Formula[string])
 - `year` (Text)

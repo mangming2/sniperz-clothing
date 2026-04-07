@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** adererror.com 레퍼런스 기반으로 홈페이지 리디자인 + 컬렉션/캠페인 목록·상세 페이지 구현 (모바일 퍼스트, 스크롤 페이드인 애니메이션)
+**Goal:** adererror.com 레퍼런스 기반으로 홈페이지 리디자인 + 컬렉션/이벤트 목록·상세 페이지 구현 (모바일 퍼스트, 스크롤 페이드인 애니메이션)
 
 **Architecture:** Next.js App Router 기반. 내비게이션은 layout.tsx에 포함. 마소너리 카드는 재사용 가능한 Server Component로 분리. 스크롤 애니메이션만 Client Component 사용. Notion API는 lib/notion/client.ts에서 처리.
 
@@ -16,13 +16,13 @@
 |------|------|
 | `app/globals.css` | 수정 — 내비, 마소너리 그리드, 카드, 페이드인 애니메이션 스타일 추가 |
 | `app/layout.tsx` | 수정 — 고정 내비게이션 추가 |
-| `app/page.tsx` | 수정 — 홈페이지 리디자인 (히어로 + 컬렉션 + 캠페인 섹션) |
+| `app/page.tsx` | 수정 — 홈페이지 리디자인 (히어로 + 컬렉션 + 이벤트 섹션) |
 | `app/components/FadeIn.tsx` | 생성 — IntersectionObserver 래퍼 Client Component |
 | `app/collections/page.tsx` | 생성 — 컬렉션 목록 페이지 |
 | `app/collections/[slug]/page.tsx` | 생성 — 컬렉션 상세 페이지 |
-| `app/campaigns/page.tsx` | 생성 — 캠페인 목록 페이지 |
-| `app/campaigns/[slug]/page.tsx` | 생성 — 캠페인 상세 페이지 |
-| `lib/notion/client.ts` | 수정 — `getCollectionBySlug`, `getCampaignBySlug` 함수 추가 |
+| `app/events/page.tsx` | 생성 — 이벤트 목록 페이지 |
+| `app/events/[slug]/page.tsx` | 생성 — 이벤트 상세 페이지 |
+| `lib/notion/client.ts` | 수정 — `getCollectionBySlug`, `getEventBySlug` 함수 추가 |
 
 ---
 
@@ -418,7 +418,7 @@ export default function RootLayout({
           <Link href="/" className="nav-logo">Sniperz</Link>
           <div className="nav-links">
             <Link href="/collections">Collections</Link>
-            <Link href="/campaigns">Campaigns</Link>
+            <Link href="/campaigns">Events</Link>
           </div>
         </nav>
         <div className="page-body">{children}</div>
@@ -494,11 +494,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Campaigns */}
+      {/* Events */}
       <section className="content-section">
         <FadeIn>
           <div className="section-header">
-            <h2>Campaigns</h2>
+            <h2>Events</h2>
             <span className="section-count">{data.campaigns.length}</span>
           </div>
         </FadeIn>
@@ -702,7 +702,7 @@ export default async function CampaignsPage() {
   return (
     <main>
       <div className="listing-header">
-        <h1>Campaigns</h1>
+        <h1>Events</h1>
       </div>
       <div className="masonry-grid">
         {campaigns.map((campaign, i) => (
@@ -863,7 +863,7 @@ export default async function CampaignDetailPage({
     <main>
       <div className="detail-page">
         <Link href="/campaigns" className="back-link">
-          ← Campaigns
+          ← Events
         </Link>
 
         <p className="detail-season">{campaign.year}</p>

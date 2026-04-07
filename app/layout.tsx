@@ -19,7 +19,7 @@ export default function RootLayout({
           <Link href="/" className="nav-logo">Sniperz</Link>
           <div className="nav-links">
             <Link href="/collections">Collections</Link>
-            <Link href="/campaigns">Campaigns</Link>
+            <Link href="/events">Events</Link>
           </div>
         </nav>
         <div className="page-body">{children}</div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import FadeIn from "./components/FadeIn";
 import { getHomepageData } from "@/lib/data/get-homepage-data";
+import { getCollectionSoldOut } from "@/lib/data/homepage-dummy";
 
 export const revalidate = 60;
 
@@ -32,9 +33,20 @@ export default async function HomePage() {
                 className="masonry-card"
               >
                 <img
-                  src={`https://picsum.photos/seed/col-${collection.slug}/400/600`}
+                  src={collection.coverImage}
                   alt={collection.title}
                 />
+                <span
+                  className={`collection-status-tag ${
+                    getCollectionSoldOut(collection.inventory)
+                      ? "sold-out"
+                      : "in-stock"
+                  }`}
+                >
+                  {getCollectionSoldOut(collection.inventory)
+                    ? "Sold Out"
+                    : "Available"}
+                </span>
                 <div className="masonry-card-overlay">
                   <p className="masonry-card-season">{collection.season}</p>
                   <p className="masonry-card-title">{collection.title}</p>
@@ -45,28 +57,28 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Campaigns */}
+      {/* Events */}
       <section className="content-section">
         <FadeIn>
           <div className="section-header">
-            <h2>Campaigns</h2>
-            <span className="section-count">{data.campaigns.length}</span>
+            <h2>Events</h2>
+            <span className="section-count">{data.events.length}</span>
           </div>
         </FadeIn>
         <div className="masonry-grid">
-          {data.campaigns.map((campaign, i) => (
-            <FadeIn key={`${campaign.slug}-${i}`} delay={i * 100}>
+          {data.events.map((event, i) => (
+            <FadeIn key={`${event.slug}-${i}`} delay={i * 100}>
               <Link
-                href={`/campaigns/${campaign.slug}`}
+                href={`/events/${event.slug}`}
                 className="masonry-card"
               >
                 <img
-                  src={`https://picsum.photos/seed/cam-${campaign.slug}/400/600`}
-                  alt={campaign.title}
+                  src={event.coverImage}
+                  alt={event.title}
                 />
                 <div className="masonry-card-overlay">
-                  <p className="masonry-card-season">{campaign.year}</p>
-                  <p className="masonry-card-title">{campaign.title}</p>
+                  <p className="masonry-card-season">{event.year}</p>
+                  <p className="masonry-card-title">{event.title}</p>
                 </div>
               </Link>
             </FadeIn>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import FadeIn from '../components/FadeIn';
 import { notionConfig, notionEnabled } from '@/lib/notion/env';
 import { getCollectionsFromNotion } from '@/lib/notion/client';
-import { homepageDummyData } from '@/lib/data/homepage-dummy';
+import { getCollectionSoldOut, homepageDummyData } from '@/lib/data/homepage-dummy';
 
 export const revalidate = 60;
 
@@ -29,9 +29,12 @@ export default async function CollectionsPage() {
           <FadeIn key={collection.slug} delay={i * 80}>
             <Link href={`/collections/${collection.slug}`} className="masonry-card">
               <img
-                src={`https://picsum.photos/seed/col-${collection.slug}/400/600`}
+                src={collection.coverImage}
                 alt={collection.title}
               />
+              <span className={`collection-status-tag ${getCollectionSoldOut(collection.inventory) ? 'sold-out' : 'in-stock'}`}>
+                {getCollectionSoldOut(collection.inventory) ? 'Sold Out' : 'Available'}
+              </span>
               <div className="masonry-card-overlay">
                 <p className="masonry-card-season">{collection.season}</p>
                 <p className="masonry-card-title">{collection.title}</p>
