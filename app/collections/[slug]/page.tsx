@@ -41,12 +41,12 @@ export default async function CollectionDetailPage({
 
         <p className="detail-season">{collection.season}</p>
         <h1 className="detail-title">{collection.title}</h1>
+        <p className="detail-price-primary">{formatEuroPrice(collection.priceEur)}</p>
         <p className="detail-description">{collection.summary}</p>
         <div className="detail-meta-row">
           <span className={`detail-status-tag ${getCollectionSoldOut(collection.inventory) ? 'sold-out' : 'in-stock'}`}>
             {getCollectionSoldOut(collection.inventory) ? 'Sold Out' : 'Available'}
           </span>
-          <span className="detail-price">{formatEuroPrice(collection.priceEur)}</span>
           <span className="detail-stock-total">
             Total Stock {collection.inventory.reduce((sum, item) => sum + item.stock, 0)}
           </span>

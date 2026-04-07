@@ -2,7 +2,6 @@ import { Client, isFullPage, isFullPageOrDatabase } from "@notionhq/client";
 import { unstable_cache } from "next/cache";
 import { notionConfig } from "./env";
 import {
-  buildCollectionImages,
   type BrandInfo,
   type Collection,
   type Event,
@@ -192,9 +191,6 @@ function buildCollectionFromPage(page: NotionPage): Collection | null {
   if (!isFullPage(page)) return null;
 
   const slug = getSlug(page, "slug");
-  const fallbackImages = buildCollectionImages(
-    slug || getTitle(page, "title").toLowerCase(),
-  );
   const galleryImages = getImageSources(page, "gallery_images");
   const coverImage =
     getImageSources(page, "cover_image")[0] ||
@@ -205,9 +201,7 @@ function buildCollectionFromPage(page: NotionPage): Collection | null {
       ? galleryImages
       : coverImage !== loadingImagePath
         ? [coverImage]
-        : fallbackImages.images.length > 0
-          ? [loadingImagePath, ...fallbackImages.images.slice(0, 3)]
-          : [loadingImagePath];
+        : [loadingImagePath];
 
   return {
     title: getTitle(page, "title"),

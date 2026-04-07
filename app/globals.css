@@ -403,8 +403,17 @@ h1 {
   font-size: clamp(2rem, 6vw, 3.2rem);
   font-weight: 800;
   line-height: 1.1;
-  margin: 0 0 20px;
+  margin: 0 0 12px;
   font-family: Georgia, "Times New Roman", serif;
+}
+
+.detail-price-primary {
+  margin: 0 0 22px;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #ffffff;
 }
 
 .detail-description {
@@ -436,14 +445,6 @@ h1 {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #919191;
-}
-
-.detail-price {
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #f2f2f2;
 }
 
 .detail-visual-grid {
