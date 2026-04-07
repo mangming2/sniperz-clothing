@@ -1,15 +1,15 @@
-import Link from 'next/link';
-import { notionEnabled } from '@/lib/notion/env';
-import { getCollectionBySlug } from '@/lib/notion/client';
+import Link from "next/link";
+import { notionEnabled } from "@/lib/notion/env";
+import { getCollectionBySlug } from "@/lib/notion/client";
 import {
   formatEuroPrice,
   getCollectionSoldOut,
-  homepageDummyData
-} from '@/lib/data/homepage-dummy';
-import { notFound } from 'next/navigation';
+  homepageDummyData,
+} from "@/lib/data/homepage-dummy";
+import { notFound } from "next/navigation";
 
 export const revalidate = 60;
-const instagramDmUrl = 'https://www.instagram.com/sniperzclothing1/';
+const instagramDmUrl = "https://www.instagram.com/sniperzclothing1/";
 
 async function getCollection(slug: string) {
   if (!notionEnabled) {
@@ -23,7 +23,7 @@ async function getCollection(slug: string) {
 }
 
 export default async function CollectionDetailPage({
-  params
+  params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
@@ -41,14 +41,21 @@ export default async function CollectionDetailPage({
 
         <p className="detail-season">{collection.season}</p>
         <h1 className="detail-title">{collection.title}</h1>
-        <p className="detail-price-primary">{formatEuroPrice(collection.priceEur)}</p>
+        <p className="detail-price-primary">
+          {formatEuroPrice(collection.priceEur)}
+        </p>
         <p className="detail-description">{collection.summary}</p>
         <div className="detail-meta-row">
-          <span className={`detail-status-tag ${getCollectionSoldOut(collection.inventory) ? 'sold-out' : 'in-stock'}`}>
-            {getCollectionSoldOut(collection.inventory) ? 'Sold Out' : 'Available'}
+          <span
+            className={`detail-status-tag ${getCollectionSoldOut(collection.inventory) ? "sold-out" : "in-stock"}`}
+          >
+            {getCollectionSoldOut(collection.inventory)
+              ? "Sold Out"
+              : "Available"}
           </span>
           <span className="detail-stock-total">
-            Total Stock {collection.inventory.reduce((sum, item) => sum + item.stock, 0)}
+            Total Stock{" "}
+            {collection.inventory.reduce((sum, item) => sum + item.stock, 0)}
           </span>
         </div>
 
@@ -56,7 +63,9 @@ export default async function CollectionDetailPage({
           {collection.images.map((image, index) => (
             <img
               key={image}
-              className={index === 0 ? 'detail-main-image' : 'detail-gallery-image'}
+              className={
+                index === 0 ? "detail-main-image" : "detail-gallery-image"
+              }
               src={image}
               alt={`${collection.title} view ${index + 1}`}
             />
@@ -66,14 +75,16 @@ export default async function CollectionDetailPage({
         <section className="inventory-panel">
           <div className="inventory-panel-header">
             <h2>Size Inventory</h2>
-            <p>상세 페이지에서 사이즈별 재고를 바로 확인할 수 있게 구성했습니다.</p>
           </div>
           <div className="inventory-grid">
             {collection.inventory.map((item) => (
-              <div key={item.size} className={`inventory-card ${item.stock === 0 ? 'empty' : ''}`}>
+              <div
+                key={item.size}
+                className={`inventory-card ${item.stock === 0 ? "empty" : ""}`}
+              >
                 <span className="inventory-size">{item.size}</span>
                 <strong className="inventory-stock">
-                  {item.stock === 0 ? 'Sold Out' : `${item.stock} left`}
+                  {item.stock === 0 ? "Sold Out" : `${item.stock} left`}
                 </strong>
               </div>
             ))}

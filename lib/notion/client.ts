@@ -13,11 +13,31 @@ const notionRevalidateSeconds = 300;
 
 type NotionPage = Parameters<typeof isFullPage>[0];
 
+function getProperty(page: NotionPage, keys: string[]) {
+  if (!isFullPage(page)) return null;
+
+  for (const key of keys) {
+    const property = page.properties[key];
+    if (property) return property;
+  }
+
+  const normalizedKeys = keys.map((key) => key.toLowerCase().replace(/[\s_-]/g, ""));
+
+  for (const [name, property] of Object.entries(page.properties)) {
+    const normalizedName = name.toLowerCase().replace(/[\s_-]/g, "");
+    if (normalizedKeys.includes(normalizedName)) {
+      return property;
+    }
+  }
+
+  return null;
+}
+
 function getTitle(page: NotionPage, key: string): string {
   // TS 에러 해결: Full Page인지 먼저 검증합니다.
   if (!isFullPage(page)) return "";
 
-  const property = page.properties[key];
+  const property = getProperty(page, [key]);
   if (!property || property.type !== "title") {
     return "";
   }
@@ -32,7 +52,7 @@ function getRichText(page: NotionPage, key: string): string {
   // TS 에러 해결: Full Page인지 먼저 검증합니다.
   if (!isFullPage(page)) return "";
 
-  const property = page.properties[key];
+  const property = getProperty(page, [key]);
   if (!property || property.type !== "rich_text") {
     return "";
   }
@@ -47,7 +67,7 @@ function getSlug(page: NotionPage, key: string): string {
   // TS 에러 해결: Full Page인지 먼저 검증합니다.
   if (!isFullPage(page)) return "";
 
-  const property = page.properties[key];
+  const property = getProperty(page, [key]);
 
   if (!property) {
     return "";
@@ -70,7 +90,7 @@ function getSlug(page: NotionPage, key: string): string {
 function getUrl(page: NotionPage, key: string): string {
   if (!isFullPage(page)) return "";
 
-  const property = page.properties[key];
+  const property = getProperty(page, [key]);
   if (!property || property.type !== "url") {
     return "";
   }
@@ -78,10 +98,10 @@ function getUrl(page: NotionPage, key: string): string {
   return property.url?.trim() ?? "";
 }
 
-function getNumber(page: NotionPage, key: string): number | null {
+function getNumber(page: NotionPage, keys: string | string[]): number | null {
   if (!isFullPage(page)) return null;
 
-  const property = page.properties[key];
+  const property = getProperty(page, Array.isArray(keys) ? keys : [keys]);
   if (!property || property.type !== "number") {
     return null;
   }
@@ -92,7 +112,7 @@ function getNumber(page: NotionPage, key: string): number | null {
 function getFiles(page: NotionPage, key: string): string[] {
   if (!isFullPage(page)) return [];
 
-  const property = page.properties[key];
+  const property = getProperty(page, [key]);
   if (!property || property.type !== "files") {
     return [];
   }
@@ -170,10 +190,10 @@ function getFallbackPrice(slug: string): number {
 
 function getCollectionInventory(page: NotionPage, slug: string): Collection["inventory"] {
   const stockEntries = [
-    { size: "S", stock: getNumber(page, "stock_s") },
-    { size: "M", stock: getNumber(page, "stock_m") },
-    { size: "L", stock: getNumber(page, "stock_l") },
-    { size: "XL", stock: getNumber(page, "stock_xl") },
+    { size: "S", stock: getNumber(page, ["stock_s", "s_stock", "size_s", "stock s"]) },
+    { size: "M", stock: getNumber(page, ["stock_m", "m_stock", "size_m", "stock m"]) },
+    { size: "L", stock: getNumber(page, ["stock_l", "l_stock", "size_l", "stock l"]) },
+    { size: "XL", stock: getNumber(page, ["stock_xl", "xl_stock", "size_xl", "stock xl"]) },
   ];
 
   const hasExplicitStock = stockEntries.some((item) => item.stock !== null);

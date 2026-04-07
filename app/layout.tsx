@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';
@@ -35,6 +36,7 @@ export default function RootLayout({
           </div>
         </nav>
         <div className="page-body">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
