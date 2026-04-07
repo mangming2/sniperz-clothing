@@ -123,6 +123,10 @@ function getImageSources(page: NotionPage, key: string): string[] {
     .filter(Boolean);
 }
 
+function getEventDescription(page: NotionPage): string {
+  return getRichText(page, "description") || getRichText(page, "concept");
+}
+
 function getFallbackInventory(slug: string): Collection["inventory"] {
   const presetMap: Record<string, Collection["inventory"]> = {
     "fractured-basics": [
@@ -228,8 +232,7 @@ function buildEventFromPage(page: NotionPage): Event | null {
   return {
     title: getTitle(page, "title"),
     slug,
-    year: getRichText(page, "year"),
-    concept: getRichText(page, "concept"),
+    description: getEventDescription(page),
     coverImage,
   };
 }

@@ -34,15 +34,15 @@ export default async function EventDetailPage({
           ← Events
         </Link>
 
-        <p className="detail-season">{event.year}</p>
         <h1 className="detail-title">{event.title}</h1>
-        <p className="detail-description">{event.concept}</p>
 
         <img
           className="detail-main-image"
           src={event.coverImage}
           alt={event.title}
         />
+
+        <p className="detail-description detail-description-below-image">{event.description}</p>
       </div>
     </main>
   );

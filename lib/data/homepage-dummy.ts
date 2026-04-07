@@ -23,8 +23,7 @@ export type CollectionInventory = {
 export type Event = {
   title: string;
   slug: string;
-  year: string;
-  concept: string;
+  description: string;
   coverImage: string;
 };
 
@@ -117,15 +116,13 @@ export const homepageDummyData: HomepageData = {
     {
       title: 'Silence in Concrete',
       slug: 'silence-in-concrete',
-      year: '2026',
-      concept: '거친 콘크리트 공간 위에 절제된 무브먼트를 얹어 조형감을 강조한 캠페인.',
+      description: '거친 콘크리트 공간 위에 절제된 무브먼트를 얹어 조형감을 강조한 이벤트.',
       coverImage: buildEventImage('silence-in-concrete')
     },
     {
       title: 'Negative Summer',
       slug: 'negative-summer',
-      year: '2025',
-      concept: '과노출 필름 톤과 어두운 테일러링의 대비를 활용한 시즌 비주얼.',
+      description: '과노출 필름 톤과 어두운 테일러링의 대비를 활용한 시즌 이벤트 비주얼.',
       coverImage: buildEventImage('negative-summer')
     }
   ]

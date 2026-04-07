@@ -104,12 +104,22 @@ h1 {
 }
 
 .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.18em;
   color: #f8f8f8;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.nav-logo-image {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
 }
 
 .nav-links {
@@ -254,6 +264,68 @@ h1 {
   margin: 0 auto;
 }
 
+.dm-section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px 96px;
+}
+
+.dm-panel {
+  padding: 28px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    #111111;
+}
+
+.detail-dm-panel {
+  margin-top: 36px;
+}
+
+.dm-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #909090;
+}
+
+.dm-panel h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  line-height: 1.2;
+}
+
+.dm-description {
+  margin: 0 0 20px;
+  max-width: 560px;
+  color: #cfcfcf;
+  line-height: 1.7;
+}
+
+.dm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  background: #f4f4f4;
+  color: #0a0a0a;
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.dm-button:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
 .section-header {
   padding: 0 24px 28px;
   display: flex;
@@ -319,6 +391,11 @@ h1 {
   line-height: 1.75;
   color: #c8c8c8;
   margin: 0 0 40px;
+}
+
+.detail-description-below-image {
+  margin-top: 24px;
+  margin-bottom: 0;
 }
 
 .detail-meta-row {

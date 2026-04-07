@@ -9,6 +9,7 @@ import {
 import { notFound } from 'next/navigation';
 
 export const revalidate = 60;
+const instagramDmUrl = 'https://www.instagram.com/sniperzclothing1/';
 
 async function getCollection(slug: string) {
   if (!notionEnabled) {
@@ -77,6 +78,22 @@ export default async function CollectionDetailPage({
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="dm-panel detail-dm-panel">
+          <p className="dm-eyebrow">Order via DM</p>
+          <h2>Request this collection on Instagram.</h2>
+          <p className="dm-description">
+            Send us: {collection.title} / preferred size / quantity.
+          </p>
+          <a
+            className="dm-button"
+            href={instagramDmUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            DM @sniperzclothing1
+          </a>
         </section>
       </div>
     </main>

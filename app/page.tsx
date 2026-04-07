@@ -4,6 +4,7 @@ import { getHomepageData } from "@/lib/data/get-homepage-data";
 import { getCollectionSoldOut } from "@/lib/data/homepage-dummy";
 
 export const revalidate = 60;
+const instagramDmUrl = "https://www.instagram.com/sniperzclothing1/";
 
 export default async function HomePage() {
   const data = await getHomepageData();
@@ -77,13 +78,33 @@ export default async function HomePage() {
                   alt={event.title}
                 />
                 <div className="masonry-card-overlay">
-                  <p className="masonry-card-season">{event.year}</p>
                   <p className="masonry-card-title">{event.title}</p>
                 </div>
               </Link>
             </FadeIn>
           ))}
         </div>
+      </section>
+
+      <section className="dm-section">
+        <FadeIn>
+          <div className="dm-panel">
+            <p className="dm-eyebrow">Direct Order</p>
+            <h2>Request your order via Instagram DM.</h2>
+            <p className="dm-description">
+              Send us the collection name and preferred size through Instagram,
+              and we will confirm stock and next steps directly.
+            </p>
+            <a
+              className="dm-button"
+              href={instagramDmUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open Instagram
+            </a>
+          </div>
+        </FadeIn>
       </section>
     </main>
   );

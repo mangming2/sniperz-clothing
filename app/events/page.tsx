@@ -33,7 +33,6 @@ export default async function EventsPage() {
                 alt={event.title}
               />
               <div className="masonry-card-overlay">
-                <p className="masonry-card-season">{event.year}</p>
                 <p className="masonry-card-title">{event.title}</p>
               </div>
             </Link>
