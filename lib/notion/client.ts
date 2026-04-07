@@ -266,6 +266,7 @@ async function fetchCollectionsFromNotion(
   const response = await notion.databases.query({
     database_id: databaseId,
     page_size: 6,
+    sorts: [{ timestamp: "created_time", direction: "descending" }],
   });
 
   return response.results
@@ -281,6 +282,7 @@ async function fetchEventsFromNotion(
   const response = await notion.databases.query({
     database_id: databaseId,
     page_size: 6,
+    sorts: [{ timestamp: "created_time", direction: "descending" }],
   });
 
   return response.results

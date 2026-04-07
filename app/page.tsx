@@ -8,6 +8,8 @@ const instagramDmUrl = "https://www.instagram.com/sniperzclothing1/";
 
 export default async function HomePage() {
   const data = await getHomepageData();
+  const featuredCollections = data.collections.slice(0, 4);
+  const featuredEvents = data.events.slice(0, 4);
 
   return (
     <main>
@@ -22,12 +24,17 @@ export default async function HomePage() {
       <section className="content-section">
         <FadeIn>
           <div className="section-header">
-            <h2>Collections</h2>
-            <span className="section-count">{data.collections.length}</span>
+            <div className="section-heading">
+              <h2>Collections</h2>
+              <span className="section-count">{data.collections.length}</span>
+            </div>
+            <Link href="/collections" className="section-more-link">
+              View All
+            </Link>
           </div>
         </FadeIn>
         <div className="masonry-grid">
-          {data.collections.map((collection, i) => (
+          {featuredCollections.map((collection, i) => (
             <FadeIn key={`${collection.slug}-${i}`} delay={i * 100}>
               <Link
                 href={`/collections/${collection.slug}`}
@@ -62,12 +69,17 @@ export default async function HomePage() {
       <section className="content-section">
         <FadeIn>
           <div className="section-header">
-            <h2>Events</h2>
-            <span className="section-count">{data.events.length}</span>
+            <div className="section-heading">
+              <h2>Events</h2>
+              <span className="section-count">{data.events.length}</span>
+            </div>
+            <Link href="/events" className="section-more-link">
+              View All
+            </Link>
           </div>
         </FadeIn>
         <div className="masonry-grid">
-          {data.events.map((event, i) => (
+          {featuredEvents.map((event, i) => (
             <FadeIn key={`${event.slug}-${i}`} delay={i * 100}>
               <Link
                 href={`/events/${event.slug}`}
